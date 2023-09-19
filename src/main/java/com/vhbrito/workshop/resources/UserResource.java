@@ -16,7 +16,7 @@ import java.util.Optional;
 @RequestMapping(value= "/users")
 public class UserResource {
 
-    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
+
     @Autowired
     private UserService userService;
 
@@ -26,7 +26,7 @@ public class UserResource {
         return ResponseEntity.ok().body(users);
     }
 
-    @GetMapping(value = "/id={id}")
+    @GetMapping(value = "/{id}")
     public ResponseEntity<Optional<User>> findById(@PathVariable Long id) {
         return ResponseEntity.ok().body(userService.findById(id));
     }
