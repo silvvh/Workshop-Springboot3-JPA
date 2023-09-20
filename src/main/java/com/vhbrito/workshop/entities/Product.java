@@ -1,11 +1,13 @@
 package com.vhbrito.workshop.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "Products")
@@ -19,16 +21,18 @@ public class Product implements Serializable {
 
     private String name;
     private String description;
-    private double price;
+    private Double price;
     private String imgUrl;
 
-    @Transient
-    private HashSet<Category> categories = new HashSet<>();
+    @JsonIgnore
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "Product_Category", joinColumns = @JoinColumn(name="product_id"), inverseJoinColumns = @JoinColumn(name="category_id"))
+    private Set<Category> categories = new HashSet<>();
 
     public Product() {
     }
 
-    public Product(Long id, String name, String description, double price, String imgUrl) {
+    public Product(Long id, String name, String description, Double price, String imgUrl) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -60,7 +64,7 @@ public class Product implements Serializable {
         this.description = description;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
@@ -76,7 +80,7 @@ public class Product implements Serializable {
         this.imgUrl = imgUrl;
     }
 
-    public HashSet<Category> getCategories() {
+    public Set<Category> getCategories() {
         return categories;
     }
 

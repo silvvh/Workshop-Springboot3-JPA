@@ -1,6 +1,7 @@
 package com.vhbrito.workshop.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vhbrito.workshop.entities.enums.OrderStatus;
 import jakarta.persistence.*;
 import com.vhbrito.workshop.entities.User;
@@ -8,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "Orders")
@@ -27,6 +30,9 @@ public class Order implements Serializable {
 
     private Integer orderStatus;
 
+    @OneToMany(mappedBy = "id.order")
+    private Set<OrderItem> items = new HashSet<>();
+
     public Order() {
     }
 
@@ -36,7 +42,6 @@ public class Order implements Serializable {
         this.client = client;
         setOrderStatus(orderStatus);
     }
-
     public Instant getMoment() {
         return moment;
     }
@@ -61,6 +66,13 @@ public class Order implements Serializable {
         return id;
     }
 
+    public Set<OrderItem> getItems() {
+        return items;
+    }
+
+    public void setItems(Set<OrderItem> items) {
+        this.items = items;
+    }
 
     public OrderStatus getOrderStatus() {
         return OrderStatus.valueOf(orderStatus);

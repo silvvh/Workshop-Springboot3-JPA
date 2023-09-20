@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name="Categories")
@@ -16,9 +17,8 @@ public class Category implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    @Transient
-    private HashSet<Product> products = new HashSet<>();
-
+    @ManyToMany(mappedBy = "categories")
+    private Set<Product> products = new HashSet<>();
     public Category() {
     }
 
@@ -45,7 +45,7 @@ public class Category implements Serializable {
         this.name = name;
     }
 
-    public HashSet<Product> getProducts() {
+    public Set<Product> getProducts() {
         return products;
     }
 
