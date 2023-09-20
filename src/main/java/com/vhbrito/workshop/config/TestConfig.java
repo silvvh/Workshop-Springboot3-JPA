@@ -1,8 +1,10 @@
 package com.vhbrito.workshop.config;
 
+import com.vhbrito.workshop.entities.Category;
 import com.vhbrito.workshop.entities.Order;
 import com.vhbrito.workshop.entities.User;
 import com.vhbrito.workshop.entities.enums.OrderStatus;
+import com.vhbrito.workshop.repositories.CategoryRepository;
 import com.vhbrito.workshop.repositories.OrderRepository;
 import com.vhbrito.workshop.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,8 @@ public class TestConfig implements CommandLineRunner {
     private UserRepository userRepository;
     @Autowired
     private OrderRepository orderRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -30,7 +34,10 @@ public class TestConfig implements CommandLineRunner {
         Order o1 = new Order(null, Instant.now(), u1, OrderStatus.WAITING_PAYMENT);
         Order o2 = new Order(null, Instant.parse("2023-09-19T15:30:15Z"), u1, OrderStatus.DELIVERED);
         Order o3 = new Order(null, Instant.now(), u2, OrderStatus.CANCELED);
+        Category c1 = new Category(null, "Eletronics");
+        Category c2 = new Category(null, "Desk");
         userRepository.saveAll(Arrays.asList(u1, u2));
         orderRepository.saveAll(Arrays.asList(o1, o2, o3));
+        categoryRepository.saveAll(Arrays.asList(c1, c2));
     }
 }
