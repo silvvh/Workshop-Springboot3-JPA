@@ -3,6 +3,7 @@ package com.vhbrito.workshop.entities;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
 
 @Entity
@@ -15,6 +16,8 @@ public class Category implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    @Transient
+    private HashSet<Product> products = new HashSet<>();
 
     public Category() {
     }
@@ -40,6 +43,10 @@ public class Category implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public HashSet<Product> getProducts() {
+        return products;
     }
 
     @Override

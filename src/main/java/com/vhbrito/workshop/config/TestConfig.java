@@ -2,10 +2,12 @@ package com.vhbrito.workshop.config;
 
 import com.vhbrito.workshop.entities.Category;
 import com.vhbrito.workshop.entities.Order;
+import com.vhbrito.workshop.entities.Product;
 import com.vhbrito.workshop.entities.User;
 import com.vhbrito.workshop.entities.enums.OrderStatus;
 import com.vhbrito.workshop.repositories.CategoryRepository;
 import com.vhbrito.workshop.repositories.OrderRepository;
+import com.vhbrito.workshop.repositories.ProductRepository;
 import com.vhbrito.workshop.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -26,6 +28,8 @@ public class TestConfig implements CommandLineRunner {
     private OrderRepository orderRepository;
     @Autowired
     private CategoryRepository categoryRepository;
+    @Autowired
+    private ProductRepository productRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -35,9 +39,17 @@ public class TestConfig implements CommandLineRunner {
         Order o2 = new Order(null, Instant.parse("2023-09-19T15:30:15Z"), u1, OrderStatus.DELIVERED);
         Order o3 = new Order(null, Instant.now(), u2, OrderStatus.CANCELED);
         Category c1 = new Category(null, "Eletronics");
-        Category c2 = new Category(null, "Desk");
+        Category c2 = new Category(null, "Books");
+        Category c3 = new Category(null, "Computers");
+        Product p1 = new Product(null, "The Lord of the Rings", "Lorem ipsum dolor sit amet, consectetur.", 90.5, "");
+        Product p2 = new Product(null, "Smart TV", "Nulla eu imperdiet purus. Maecenas ante.", 2190.0, "");
+        Product p3 = new Product(null, "Macbook Pro", "Nam eleifend maximus tortor, at mollis.", 1250.0, "");
+        Product p4 = new Product(null, "PC Gamer", "Donec aliquet odio ac rhoncus cursus.", 1200.0, "");
+        Product p5 = new Product(null, "Rails for Dummies", "Cras fringilla convallis sem vel faucibus.", 100.99, "");
         userRepository.saveAll(Arrays.asList(u1, u2));
         orderRepository.saveAll(Arrays.asList(o1, o2, o3));
         categoryRepository.saveAll(Arrays.asList(c1, c2));
+        productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
+
     }
 }
