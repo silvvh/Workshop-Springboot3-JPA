@@ -78,6 +78,14 @@ public class Order implements Serializable {
         return OrderStatus.valueOf(orderStatus);
     }
 
+    public Set<Product> getProducts() {
+        Set<Product> products = new HashSet<>();
+        for (OrderItem o : items) {
+            products.add(o.getProduct());
+        }
+        return products;
+    }
+
     public void setOrderStatus(OrderStatus orderStatus) {
         if(orderStatus != null) this.orderStatus = orderStatus.getCode();
     }
