@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -30,6 +31,8 @@ public class Order implements Serializable {
 
     private Integer orderStatus;
 
+    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+    private Payment payment;
     @OneToMany(mappedBy = "id.order")
     private Set<OrderItem> items = new HashSet<>();
 
@@ -86,7 +89,36 @@ public class Order implements Serializable {
         return products;
     }
 
+    public Payment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
+    }
+
     public void setOrderStatus(OrderStatus orderStatus) {
         if(orderStatus != null) this.orderStatus = orderStatus.getCode();
+    }
+
+    public Double getTotal() {
+        return total();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Order order = (Order) o;
+        return Objects.equals(getId(), order.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
+    }
+
+    public Double total() {
+        return items.stream().map(OrderItem::subTotal).reduce(0.0, Double::sum);
     }
 }

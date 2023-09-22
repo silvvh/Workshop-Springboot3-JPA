@@ -3,6 +3,7 @@ package com.vhbrito.workshop.config;
 import com.vhbrito.workshop.entities.*;
 import com.vhbrito.workshop.entities.enums.OrderStatus;
 import com.vhbrito.workshop.repositories.*;
+import org.hibernate.id.IdentifierGenerationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -37,7 +38,7 @@ public class TestConfig implements CommandLineRunner {
         Category c1 = new Category(null, "Eletronics");
         Category c2 = new Category(null, "Books");
         Category c3 = new Category(null, "Computers");
-        categoryRepository.saveAll(Arrays.asList(c1, c2));
+        categoryRepository.saveAll(Arrays.asList(c1, c2, c3));
         Product p1 = new Product(null, "The Lord of the Rings", "Lorem ipsum dolor sit amet, consectetur.", 90.5, "");
         Product p2 = new Product(null, "Smart TV", "Nulla eu imperdiet purus. Maecenas ante.", 2190.0, "");
         Product p3 = new Product(null, "Macbook Pro", "Nam eleifend maximus tortor, at mollis.", 1250.0, "");
@@ -58,5 +59,12 @@ public class TestConfig implements CommandLineRunner {
         OrderItem oi3 = new OrderItem(o2, p3, 2, p3.getPrice());
         OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice());
         orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
+        Payment pay1 = new Payment(null, Instant.parse("2023-09-19T15:30:15Z"), o1);
+        Payment pay2 = new Payment(null, Instant.parse("2023-10-20T21:30:48Z"), o2);
+        Payment pay3 = new Payment(null, Instant.parse("2023-05-12T10:20:37Z"), o3);
+            o1.setPayment(pay1);
+            o2.setPayment(pay2);
+            o3.setPayment(pay3);
+        orderRepository.saveAll(Arrays.asList(o1, o2, o3));
     }
 }
