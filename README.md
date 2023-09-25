@@ -1,4 +1,4 @@
-# Workshop-Springboot
+# Workshop-Springboot-JPA
 
 [![NPM](https://img.shields.io/npm/l/react)](https://github.com/silvvh/Workshop-Springboot3-JPA/blob/main/LICENSE)
 
